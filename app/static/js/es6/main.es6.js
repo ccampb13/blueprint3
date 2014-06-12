@@ -9,8 +9,9 @@
 
   function init(){
     $('#create-room').click(createRoom);
+    $('#save-room').click(saveRoom);
   }
-
+  //create room
   function createRoom(){
     begin = end = null;
     $('#building').on('click', '.cell', selectBegin);
@@ -44,4 +45,20 @@
     var selector = selectors.join(', ');
     $(selector).addClass('temp').css('background-image', `url(${img})`);
   }
+  //save room
+  function saveRoom () {
+    var id = $('#building').data('id');
+    var name = $('#name').val();
+    var floorId = $('#floors').val();
+
+    $.ajax({
+      url: `/buildings/${id}/rooms`,
+      type: 'put',
+      data: {name:name, /*beginX:beginX, beginY:beginY, endX:endX, endY:endY,*/ floorId:floorId},
+      dataType: 'json',
+      success: data => {
+      }
+    });
+  }
+
 })();
